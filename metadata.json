@@ -1,0 +1,8 @@
+{
+  "name": "Create Sales Order - Store (SAPUI5)",
+  "description": "SAPUI5 Fiori application for Create Sales Order (Store) with 7-step guided flow, XML views, JavaScript controllers, manifest routing, and mock data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

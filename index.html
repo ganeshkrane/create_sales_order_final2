@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Sales Order - Store (SAPUI5)</title>
+    <meta name="description" content="SAPUI5 Fiori application for Create Sales Order (Store) with 7-step guided flow, XML views, JavaScript controllers, manifest routing, and mock data." />
+    <meta property="og:title" content="Create Sales Order - Store (SAPUI5)" />
+    <meta property="og:description" content="SAPUI5 Fiori application for Create Sales Order (Store) with 7-step guided flow, XML views, JavaScript controllers, manifest routing, and mock data." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      #fioriSplash {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #f5f7f9;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        z-index: 99999;
+        transition: opacity 0.3s ease;
+      }
+      .fioriSpinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid #d5e3f0;
+        border-top-color: #0854a0;
+        border-radius: 50%;
+        animation: fioriSpin 0.9s linear infinite;
+        margin-bottom: 20px;
+      }
+      @keyframes fioriSpin {
+        to { transform: rotate(360deg); }
+      }
+      .fioriSplashTitle {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1d2d3e;
+        margin-bottom: 6px;
+      }
+      .fioriSplashSubtitle {
+        font-size: 0.875rem;
+        color: #5d6e80;
+      }
+    </style>
+
+    <script
+      id="sap-ui-bootstrap"
+      src="https://sdk.openui5.org/resources/sap-ui-core.js"
+      data-sap-ui-theme="sap_horizon"
+      data-sap-ui-resourceroots='{
+        "sap.ui.salesorder.store": "./webapp"
+      }'
+      data-sap-ui-libs="sap.m,sap.ui.core,sap.ui.layout,sap.ui.unified"
+      data-sap-ui-compatVersion="edge">
+    </script>
+    <link rel="stylesheet" type="text/css" href="./webapp/css/style.css" />
+  </head>
+  <body class="sapUiBody" id="content">
+    <div id="fioriSplash">
+      <div class="fioriSpinner"></div>
+      <div class="fioriSplashTitle">SAP Fiori · Store Sales</div>
+      <div class="fioriSplashSubtitle">Loading Customer Wizard application...</div>
+    </div>
+
+    <script>
+      function removeSplash() {
+        var splash = document.getElementById("fioriSplash");
+        if (splash) {
+          splash.style.opacity = "0";
+          setTimeout(function() {
+            if (splash.parentNode) splash.parentNode.removeChild(splash);
+          }, 300);
+        }
+      }
+
+      function initApp() {
+        if (window.sap && sap.ui && sap.ui.getCore) {
+          sap.ui.getCore().attachInit(function () {
+            sap.ui.require([
+              "sap/ui/core/ComponentContainer"
+            ], function (ComponentContainer) {
+              new ComponentContainer({
+                name: "sap.ui.salesorder.store",
+                settings: { id: "salesorder" },
+                async: true,
+                height: "100%"
+              }).placeAt("content");
+              removeSplash();
+            });
+          });
+        }
+      }
+
+      if (window.sap && sap.ui && sap.ui.getCore) {
+        initApp();
+      } else {
+        var s = document.getElementById("sap-ui-bootstrap");
+        if (s) {
+          s.addEventListener("load", initApp);
+          s.addEventListener("error", function() {
+            var splash = document.getElementById("fioriSplash");
+            if (splash) {
+              splash.innerHTML = "<div style='color:#b00;font-weight:600;'>Failed to load OpenUI5 core from CDN. Please check network connection.</div>";
+            }
+          });
+        }
+        setTimeout(function() {
+          if (window.sap && sap.ui && sap.ui.getCore) {
+            initApp();
+          }
+        }, 800);
+      }
+    </script>
+  </body>
+</html>
